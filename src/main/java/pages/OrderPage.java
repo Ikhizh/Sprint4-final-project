@@ -12,9 +12,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 public class OrderPage {
     private WebDriver driver;
 
-    // Заголовок страницы
-    private By headerLogoOrderPage = By.className("Header_LogoScooter__3lsAR");
-
     // Поле ввода имени
     private By nameField = By.xpath(".//input[@placeholder='* Имя']");
     // Поле ввода Фамилии

@@ -13,18 +13,14 @@ import static org.hamcrest.CoreMatchers.containsString;
 public class MainPageScooter {
     private WebDriver driver;
 
-
     // Заголовок страницы
     private By headerLogo = By.className("Header_Logo__23yGT");
-
-    //Вопросы о важном
-    private By questionsImportant = By.xpath(".//div[@class = 'Home_SubHeader__zwi_E' and text()='Вопросы о важном']");
 
     //Кнопка Заказать на верху страницы
     private By topOrderButton = By.xpath(".//button[@class = 'Button_Button__ra12g']");
 
     // Кнопка заказать внизу страницы
-    private By bottomOrderButton = By.className("Button_Button__ra12g Button_Middle__1CSJM");
+    private By bottomOrderButton = By.xpath(".//button[@class = 'Button_Button__ra12g Button_Middle__1CSJM']");
 
     // Первая стрелка : Сколько это стоит? И как оплатить?
     private String arrow = "//div[@id='accordion__heading-%d'][text()='%s']";
@@ -45,13 +41,24 @@ public class MainPageScooter {
     public void clickTopOrderButton() {
         driver.findElement(topOrderButton).click();
     }
-
     // метод для нажатия на кнопку внизу страницы
     public void clickBottomOrderButton() {
-        driver.findElement(bottomOrderButton).click();
+        WebElement bottomOrderButton = driver.findElement(this.bottomOrderButton);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView()", bottomOrderButton);
+        bottomOrderButton.click();
+    }
+    // Метод для выбора кнопки Заказать
+    public void clickOrderButton(String button){
+        if (button.equals("topOrderButton")) {
+            clickTopOrderButton();
+        }
+        if (button.equals("bottomOrderButton")) {
+            clickBottomOrderButton();
+        }
     }
 
-    // Метод для нажатия на стрелку 1 (firstArrow)
+    // Метод для нажатия на стрелку
     public void pressArrow(int numbArrow, String question) {
         WebElement arrow = driver.findElement(By.xpath(String.format(this.arrow, numbArrow, question)));
         JavascriptExecutor js = (JavascriptExecutor) driver;

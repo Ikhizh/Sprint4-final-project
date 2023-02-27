@@ -17,18 +17,20 @@ public class OrderTest {
     private final String metroStationName;
     private final String rentPeriod;
     private final String scooterColor;
+    private final String button;
 
-    public OrderTest(String metroStationName, String rentPeriod, String scooterColor) {
+    public OrderTest(String metroStationName, String rentPeriod, String scooterColor, String button) {
         this.metroStationName = metroStationName;
         this.rentPeriod = rentPeriod;
         this.scooterColor = scooterColor;
+        this.button = button;
     }
 
     @Parameterized.Parameters
     public static Object[][] getData() {
         return new Object[][]{
-                {"Черкизовская", "сутки", "чёрный жемчуг"},
-                {"Арбатская", "двое суток", "серая безысходность"},
+                {"Черкизовская", "сутки", "чёрный жемчуг", "topOrderButton"},
+                {"Арбатская", "двое суток", "серая безысходность", "bottomOrderButton"},
         };
     }
 
@@ -41,10 +43,9 @@ public class OrderTest {
         mainPageScooter = new MainPageScooter(driver);
         mainPageScooter.waitForLoadProfileData();
     }
-
     @Test
     public void orderCheck() {
-        mainPageScooter.clickTopOrderButton();
+        mainPageScooter.clickOrderButton(button);
         OrderPage orderPage = new OrderPage(driver);
         orderPage.enterFirstOrderPath("Иван", "Иванов", "Дом номер10", metroStationName, "+79992347698");
         orderPage.pressNextButton();
